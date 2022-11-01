@@ -10,7 +10,7 @@
 .group-control-form {
   align-items: center;
   justify-content: space-around;
-  border-radius: 15px;
+  border-radius: 5px;
   perspective: 1px;
   overflow: hidden;
   border: none;
@@ -19,40 +19,83 @@
 .form-control {
   text-align: left;
   padding-top: 30px;
-  background-color: rgba(65, 65, 70, 0.9);
+  background-color: rgba(65, 65, 70, 0.98);
+  padding-left: 12%;
+  padding-right: 15%;
+}
+
+.form-control-instruction {
+  text-align: left;
+  background-color: rgba(65, 65, 70, 0.98);
   padding-left: 10%;
   padding-right: 10%;
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
 }
 
 .nome {
   text-align: left;
   padding-top: 70px;
-  background-color: rgba(65, 65, 70, 0.9);
+  background-color: rgba(65, 65, 70, 0.98);
   padding-left: 10%;
   padding-right: 10%;
+  display: flex;
+  flex-direction: column;
 }
 
 .email {
   text-align: left;
-  background-color: rgba(65, 65, 70, 0.9);
+  background-color: rgba(65, 65, 70, 0.98);
   padding-left: 10%;
   padding-right: 10%;
   padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.idade {
+  text-align: left;
+  padding-top: 30px;
+  background-color: rgba(65, 65, 70, 0.98);
+  padding-left: 10%;
+  padding-right: 10%;
+  display: flex;
+  flex-direction: column;
 }
 
 .email input,
-.nome input {
+.nome input,
+.idade input {
   height: 20px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: rgba(36, 45, 47, 1);
+  color: white;
+}
+
+.email input:focus,
+.nome input:focus {
+  border: none;
+}
+
+.email input:active,
+.nome input:active {
+  border: none;
 }
 
 .nome input {
-  margin-left: 7px;
+  margin-left: 13px;
 }
 
 .email label,
-.nome label {
+.nome label,
+.idade label {
   font-size: 15px;
   padding-top: 2px;
+  margin-left: 13px;
+  margin-bottom: 7px;
 }
 
 .form-control label {
@@ -66,12 +109,18 @@
 
 .form-control input {
   height: 20px;
+  border-radius: 5px;
+  border: none;
 }
 
-.form-control select {
+.form-control-instruction select {
   margin-left: 11px;
   height: 28px;
   width: 71%;
+  border-radius: 5px;
+  background-color: rgba(36, 45, 47, 1);
+  color: white;
+  border: none;
 }
 
 .input-text {
@@ -103,19 +152,43 @@
   margin-top: 17px;
   margin-bottom: 70px;
   width: 85%;
+  border-radius: 5px;
+  background-color: rgba(36, 45, 47, 1);
+  color: white;
+  outline: none;
+  border: none;
 }
 
 .group-control-btn {
   margin: 50px auto;
 }
 
-.group-control-btn button {
-  background-color: green;
+.group-control-btn button,
+.group-control-btn button:active {
+  background-color: blue;
   color: white;
   font-size: 15px;
   font-weight: bold;
   border: none;
-  width: 300px;
-  height: 30px;
-  border-radius: 50px;
+  width: 500px;
+  height: 50px;
+  border-radius: 5px;
+}
+
+.group-control-btn button:hover {
+  background-color: white;
+  color: black;
+}
+
+.error-text {
+  color: red;
+  margin: 10px 0px 0px 0px;
+  text-align: justify;
+  font-size: 15px;
+  margin-left: 15px;
+}
+
+.form-control-instruction label {
+  padding-left: 13px;
+  padding-bottom: 7px;
 }

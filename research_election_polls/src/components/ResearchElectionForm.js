@@ -1,36 +1,120 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import useInput from "../hooks/use-input";
 import styles from "./ResearchElectionForm.module.css";
 
-const ResearchElectionForm = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [age, setAge] = useState("");
-  const [instruction, setInstruction] = useState("");
+const isNotEmpty = (value) => value.trim() !== "";
+const isNotEmptyCheckBox = (value) => value;
+const isEmail = (value) => /^[^s@]+@[^s@]+.[^s@]+$/.test(value);
+const isAge = (value) => value.trim() !== "" && value <= 100;
+const isNotInstruction = (value) =>
+  value.trim() !== "" && value !== "Selecione uma opção";
+const isObs = (value) => value.trim() !== "" || value.trim() === "";
 
-  const nameChangeHandler = (e) => {
-    setName(e.target.value);
-  };
-  const emailChangeHandler = (e) => {
-    setEmail(e.target.value);
-  };
-  const ageChangeHandler = (e) => {
-    setAge(e.target.value);
-  };
-  const instructionChangeHandler = (e) => {
-    setInstruction(e.target.value);
-  };
+const partidosPoliticos = {
+  PSL: "psl",
+  PT: "pt",
+  PL: "pl",
+  PP: "pp",
+  PSD: "psd",
+  MDB: "mdb",
+  PSDB: "psdb",
+  REP: "rep",
+  PSB: "psb",
+  PPP: "ppp",
+  DEM: "dem",
+  PDT: "pdt",
+  SOLIDARIEDADE: "solidariedade",
+  PODE: "podemos",
+  PSOL: "psol",
+  NOVO: "novo",
+  AVANTE: "avante",
+  PCDOB: "pcdob",
+  CIDADANIA: "didadania",
+  PATRIOTA: "patriota",
+  PV: "pv",
+  REDE: "rede",
+};
+
+const ResearchElectionForm = () => {
+  const {
+    value: nameValue,
+    isValid: nameIsValid,
+    hasError: nameHasError,
+    valueChangeHandler: nameChangeHandler,
+    inputBlurHandler: nameBlurHandler,
+    reset: resetName,
+  } = useInput(isNotEmpty);
+
+  const {
+    value: emailValue,
+    isValid: emailIsValid,
+    hasError: emailHasError,
+    valueChangeHandler: emailChangeHandler,
+    inputBlurHandler: emailBlurHandler,
+    reset: resetEmail,
+  } = useInput(isEmail);
+
+  const {
+    value: ageValue,
+    isValid: ageIsValid,
+    hasError: ageHasError,
+    valueChangeHandler: ageChangeHandler,
+    inputBlurHandler: ageBlurHandler,
+    reset: resetAge,
+  } = useInput(isAge);
+
+  const {
+    value: instructionValue,
+    isValid: instructionIsValid,
+    hasError: instructionHasError,
+    valueChangeHandler: instructionChangeHandler,
+    inputBlurHandler: instructionBlurHandler,
+    reset: resetInstruction,
+  } = useInput(isNotInstruction);
+
+  const {
+    value: specValue,
+    isValid: specIsValid,
+    hasError: specHasError,
+    valueChangeHandler: specChangeHandler,
+    inputBlurHandler: specBlurHandler,
+    reset: resetSpec,
+  } = useInput(isNotEmpty);
+
+  const {
+    value: partidosValue,
+    isValid: partidosIsValid,
+    hasError: partidosHasError,
+    valueChangeHandlerCheckBox: partidosChangeHandler,
+    inputBlurHandler: partidosBlurHandler,
+    reset: resetPartidos,
+  } = useInput(isNotEmptyCheckBox);
+
+  const {
+    value: obsValue,
+    isValid: obsIsValid,
+    hasError: obsHasError,
+    valueChangeHandler: obsChangeHandler,
+    inputBlurHandler: obsBlurHandler,
+    reset: resetObs,
+  } = useInput(isObs);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
     const researchData = {
-      name,
-      email,
-      age,
-      instruction,
+      nameValue,
+      emailValue,
+      ageValue,
+      instructionValue,
+      specValue,
+      partidosValue,
+      obsValue,
     };
 
     console.log(researchData);
+
+    resetName();
   };
 
   return (
@@ -41,28 +125,67 @@ const ResearchElectionForm = () => {
             <label htmlFor="nome" className={styles["titles"]}>
               Nome:
             </label>
-            <input id="nome" type="text" className={styles["input-text"]} />
+            <input
+              id="nome"
+              type="text"
+              className={styles["input-text"]}
+              value={nameValue}
+              onChange={nameChangeHandler}
+              onBlur={nameBlurHandler}
+            />
+            {nameHasError && (
+              <p className={styles["error-text"]}>Entre com um nome válido!</p>
+            )}
           </div>
 
           <div className={styles["email"]}>
             <label htmlFor="email" className={styles["titles"]}>
               Email:
             </label>
-            <input id="email" type="email" className={styles["input-text"]} />
+            <input
+              id="email"
+              type="email"
+              className={styles["input-text"]}
+              value={emailValue}
+              onChange={emailChangeHandler}
+              onBlur={emailBlurHandler}
+            />
+            {emailHasError && (
+              <p className={styles["error-text"]}>Entre com um email válido!</p>
+            )}
           </div>
 
-          <div className={styles["form-control"]}>
+          <div className={styles["idade"]}>
             <label htmlFor="idade" className={styles["titles"]}>
               Idade:
             </label>
-            <input id="idade" type="number" className={styles["input-text"]} />
+            <input
+              id="idade"
+              type="number"
+              className={styles["input-text"]}
+              value={ageValue}
+              onChange={ageChangeHandler}
+              onBlur={ageBlurHandler}
+            />
+            {ageHasError && (
+              <p className={styles["error-text"]}>
+                Entre com uma idade válida!
+              </p>
+            )}
           </div>
 
-          <div className={styles["form-control"]}>
+          <div className={styles["form-control-instruction"]}>
             <label htmlFor="grauInstrucao" className={styles["titles"]}>
               Grau de Instrução:
             </label>
-            <select name="grauInstrucao" id="grauInstrucao" required>
+            <select
+              name="grauInstrucao"
+              id="grauInstrucao"
+              required
+              value={instructionValue}
+              onChange={instructionChangeHandler}
+              onBlur={instructionBlurHandler}
+            >
               <option value="Selecione uma opção">Selecione uma opção</option>
               <option value="Analfabeto">Analfabeto</option>
               <option value="Até 4ª série incompleta do 1º grau (ensino fundamental)">
@@ -92,9 +215,19 @@ const ResearchElectionForm = () => {
               <option value="Doutorado">Doutorado</option>
               <option value="Pós-Doutorado">Pós-Doutorado</option>
             </select>
+            {instructionHasError && (
+              <p className={styles["error-text"]}>
+                Entre com uma instrução válida!
+              </p>
+            )}
           </div>
 
-          <div className={styles["form-control"]}>
+          <div
+            className={styles["form-control"]}
+            value={specValue}
+            onChange={specChangeHandler}
+            onBlur={specBlurHandler}
+          >
             <p htmlFor="espectroPolitico" className={styles["titles"]}>
               Com qual espectro político você se identifica mais, escolha apenas
               uma opção:
@@ -106,101 +239,183 @@ const ResearchElectionForm = () => {
                 value="centro"
                 name="fav_espectro"
               />
-              <label>Centro </label>
+              <label>Centro</label>
             </div>
             <div className={styles["radio-options"]}>
               <input
                 id="espectroPolitico"
                 type="radio"
-                value="centro"
+                value="centro-direita"
                 name="fav_espectro"
               />
-              <label>Centro-direita </label>
+              <label>Centro-direita</label>
             </div>
             <div className={styles["radio-options"]}>
               <input
                 id="espectroPolitico"
                 type="radio"
-                value="centro"
+                value="centro-esquerda"
                 name="fav_espectro"
               />
-              <label>Centro-esquerda </label>
+              <label>Centro-esquerda</label>
             </div>
             <div className={styles["radio-options"]}>
               <input
                 id="espectroPolitico"
                 type="radio"
-                value="centro"
+                value="extrema-direita"
                 name="fav_espectro"
               />
-              <label>Extrema-direita </label>
+              <label>Extrema-direita</label>
             </div>
             <div className={styles["radio-options"]}>
               <input
                 id="espectroPolitico"
                 type="radio"
-                value="centro"
+                value="extrema-esquerda"
                 name="fav_espectro"
               />
-              <label>Extrema-esquerda </label>
+              <label>Extrema-esquerda</label>
             </div>
+
+            {specHasError && (
+              <p className={styles["error-text"]}>
+                Entre com um espectro político válido!
+              </p>
+            )}
           </div>
 
-          <div className={styles["form-control"]}>
+          <div
+            className={styles["form-control"]}
+            value={partidosValue}
+            onBlur={partidosBlurHandler}
+          >
             <p htmlFor="partidoPolitico" className={styles["titles"]}>
               Com qual ou quais partidos políticos você se identifica:
             </p>
             <div className={styles["check-points"]}>
-              <input type="checkbox" id="psl" name="part_check" value="psl" />
+              <input
+                type="checkbox"
+                id="psl"
+                name="part_check"
+                value="psl"
+                onChange={partidosChangeHandler}
+              />
               <label htmlFor="psl">Partido Social Liberal (PSL)</label>
             </div>
             <div className={styles["check-points"]}>
-              <input type="checkbox" id="pt" name="part_check" value="pt" />
+              <input
+                type="checkbox"
+                id="pt"
+                name="part_check"
+                value="pt"
+                onChange={partidosChangeHandler}
+              />
               <label htmlFor="pt">Partido dos Trabalhadores (PT)</label>
             </div>
 
             <div className={styles["check-points"]}>
-              <input type="checkbox" id="pl" name="part_check" value="pl" />
+              <input
+                type="checkbox"
+                id="pl"
+                name="part_check"
+                value="pl"
+                onChange={partidosChangeHandler}
+              />
               <label htmlFor="pl">Partido Liberal (PL)</label>
             </div>
             <div className={styles["check-points"]}>
-              <input type="checkbox" id="pp" name="part_check" value="pp" />
+              <input
+                type="checkbox"
+                id="pp"
+                name="part_check"
+                value="pp"
+                onChange={partidosChangeHandler}
+              />
               <label htmlFor="pp">Progressista (PP)</label>
             </div>
             <div className={styles["check-points"]}>
-              <input type="checkbox" id="psd" name="part_check" value="psd" />
+              <input
+                type="checkbox"
+                id="psd"
+                name="part_check"
+                value="psd"
+                onChange={partidosChangeHandler}
+              />
               <label htmlFor="psd">Partido Social Democrático (PSD)</label>
             </div>
             <div className={styles["check-points"]}>
-              <input type="checkbox" id="mdb" name="part_check" value="mdb" />
+              <input
+                type="checkbox"
+                id="mdb"
+                name="part_check"
+                value="mdb"
+                onChange={partidosChangeHandler}
+              />
               <label htmlFor="mdb">
                 Movimento Democrático Brasileiro (MDB)
               </label>
             </div>
             <div className={styles["check-points"]}>
-              <input type="checkbox" id="psdb" name="part_check" value="psdb" />
+              <input
+                type="checkbox"
+                id="psdb"
+                name="part_check"
+                value="psdb"
+                onChange={partidosChangeHandler}
+              />
               <label htmlFor="psdb">
                 Partido da Social Democracia Brasileira (PSDB)
               </label>
             </div>
             <div className={styles["check-points"]}>
-              <input type="checkbox" id="rep" name="part_check" value="rep" />
+              <input
+                type="checkbox"
+                id="rep"
+                name="part_check"
+                value="rep"
+                onChange={partidosChangeHandler}
+              />
               <label htmlFor="rep">Republicanos</label>
             </div>
             <div className={styles["check-points"]}>
-              <input type="checkbox" id="psb" name="part_check" value="psb" />
+              <input
+                type="checkbox"
+                id="psb"
+                name="part_check"
+                value="psb"
+                onChange={partidosChangeHandler}
+              />
               <label htmlFor="psb">Partido Socialista Brasileiro (PSB)</label>
             </div>
             <div className={styles["check-points"]}>
-              <input type="checkbox" id="ppp" name="part_check" value="ppp" />
+              <input
+                type="checkbox"
+                id="ppp"
+                name="part_check"
+                value="ppp"
+                onChange={partidosChangeHandler}
+              />
               <label htmlFor="ppp">Bloco PROS, PSC, PTB</label>
             </div>
             <div className={styles["check-points"]}>
-              <input type="checkbox" id="dem" name="part_check" value="dem" />
+              <input
+                type="checkbox"
+                id="dem"
+                name="part_check"
+                value="dem"
+                onChange={partidosChangeHandler}
+              />
               <label htmlFor="dem">Democratas (DEM)</label>
             </div>
             <div className={styles["check-points"]}>
-              <input type="checkbox" id="pdt" name="part_check" value="pdt" />
+              <input
+                type="checkbox"
+                id="pdt"
+                name="part_check"
+                value="pdt"
+                onChange={partidosChangeHandler}
+              />
               <label htmlFor="pdt">Partido Democrático Trabalhista (PDT)</label>
             </div>
             <div className={styles["check-points"]}>
@@ -209,6 +424,7 @@ const ResearchElectionForm = () => {
                 id="solidariedade"
                 name="part_check"
                 value="solidariedade"
+                onChange={partidosChangeHandler}
               />
               <label htmlFor="solidariedade">Solidariedade</label>
             </div>
@@ -218,17 +434,30 @@ const ResearchElectionForm = () => {
                 id="podemos"
                 name="part_check"
                 value="podemos"
+                onChange={partidosChangeHandler}
               />
               <label htmlFor="podemos">Podemos (PODE)</label>
             </div>
             <div className={styles["check-points"]}>
-              <input type="checkbox" id="psol" name="part_check" value="psol" />
+              <input
+                type="checkbox"
+                id="psol"
+                name="part_check"
+                value="psol"
+                onChange={partidosChangeHandler}
+              />
               <label htmlFor="psol">
                 Partido Socialismo e Liberdade (PSOL)
               </label>
             </div>
             <div className={styles["check-points"]}>
-              <input type="checkbox" id="novo" name="part_check" value="novo" />
+              <input
+                type="checkbox"
+                id="novo"
+                name="part_check"
+                value="novo"
+                onChange={partidosChangeHandler}
+              />
               <label htmlFor="novo">Partido Novo (NOVO)</label>
             </div>
             <div className={styles["check-points"]}>
@@ -237,6 +466,7 @@ const ResearchElectionForm = () => {
                 id="avante"
                 name="part_check"
                 value="avante"
+                onChange={partidosChangeHandler}
               />
               <label htmlFor="avante">Avante</label>
             </div>
@@ -246,6 +476,7 @@ const ResearchElectionForm = () => {
                 id="pcdob"
                 name="part_check"
                 value="pcdob"
+                onChange={partidosChangeHandler}
               />
               <label htmlFor="pcdob">Partido Comunista do Brasil (PCdoB)</label>
             </div>
@@ -255,6 +486,7 @@ const ResearchElectionForm = () => {
                 id="cidadania"
                 name="part_check"
                 value="cidadania"
+                onChange={partidosChangeHandler}
               />
               <label htmlFor="cidadania">Cidadania</label>
             </div>
@@ -264,17 +496,35 @@ const ResearchElectionForm = () => {
                 id="patriota"
                 name="part_check"
                 value="patriota"
+                onChange={partidosChangeHandler}
               />
               <label htmlFor="patriota">Patriota</label>
             </div>
             <div className={styles["check-points"]}>
-              <input type="checkbox" id="pv" name="part_check" value="pv" />
+              <input
+                type="checkbox"
+                id="pv"
+                name="part_check"
+                value="pv"
+                onChange={partidosChangeHandler}
+              />
               <label htmlFor="pv">Partido Verde (PV)</label>
             </div>
             <div className={styles["check-points"]}>
-              <input type="checkbox" id="pv" name="part_check" value="pv" />
+              <input
+                type="checkbox"
+                id="rede"
+                name="part_check"
+                value="rede"
+                onChange={partidosChangeHandler}
+              />
               <label htmlFor="pv">Rede Sustentabilidade (REDE)</label>
             </div>
+            {partidosHasError && (
+              <p className={styles["error-text"]}>
+                Selecione pelo menos um partido político!
+              </p>
+            )}
           </div>
 
           <div className={styles["form-control"]}>
@@ -288,7 +538,15 @@ const ResearchElectionForm = () => {
               rows="4"
               cols="50"
               className={styles["input-txtarea"]}
+              value={obsValue}
+              onChange={obsChangeHandler}
+              onBlur={obsBlurHandler}
             ></textarea>
+            {obsHasError && (
+              <p className={styles["error-text"]}>
+                Entre com uma observação válida!
+              </p>
+            )}
           </div>
         </div>
         <div className={styles["group-control-btn"]}>
