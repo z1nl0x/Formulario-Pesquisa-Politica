@@ -2,28 +2,31 @@ import React, { useReducer } from "react";
 
 const initialInputState = {
   value: "",
+  checkArr: [],
   isTouched: false,
-  checkArr: [""],
 };
 
 const inputReducerFunc = (state, action) => {
-  if (action.type === "INPUT-CHECKBOX") {
-    if (action.check && !state.checkArr.includes(action.value)) {
-      return {
-        isTouched: state.isTouched,
-        checkArr: [...state.checkArr, action.value],
-      };
-    } else {
-      return {
-        isTouched: state.isTouched,
-        checkArr: [...state.checkArr],
-      };
-    }
+  if (action.type === "CHECKBOX" && !state.checkArr.includes(action.value)) {
+    return {
+      value: action.value,
+      checkArr: [...state.checkArr, action.value],
+      isTouched: state.isTouched,
+    };
+  }
+
+  if (action.type === "CHECKBOX" && state.checkArr.includes(action.value)) {
+    return {
+      value: action.value,
+      checkArr: state.checkArr.filter((e) => e !== action.value),
+      isTouched: state.isTouched,
+    };
   }
 
   if (action.type === "INPUT") {
     return {
       value: action.value,
+      checkArr: state.checkArr,
       isTouched: state.isTouched,
     };
   }
@@ -31,6 +34,7 @@ const inputReducerFunc = (state, action) => {
   if (action.type === "BLUR") {
     return {
       value: state.value,
+      checkArr: state.checkArr,
       isTouched: true,
     };
   }
@@ -54,13 +58,18 @@ const useInput = (validatedValue) => {
   };
 
   const valueChangeHandlerCheckBox = (e) => {
-    const isChecked = e.target.checked;
+    const { value, checked } = e.target;
 
-    dispatch({
-      type: "INPUT-CHECKBOX",
-      value: e.target.value,
-      check: isChecked,
-    });
+    console.log(`${value} is ${checked}`);
+
+    if (checked) {
+      dispatch({
+        type: "CHECKBOX",
+        value: value,
+      });
+    } else {
+      dispatch({ type: "CHECKBOX", value: value });
+    }
   };
 
   const inputBlurHandler = (e) => {
@@ -73,6 +82,7 @@ const useInput = (validatedValue) => {
 
   return {
     value: inputState.value,
+    checkArr: inputState.checkArr,
     isValid: valueIsValid,
     hasError: hasError,
     valueChangeHandler,

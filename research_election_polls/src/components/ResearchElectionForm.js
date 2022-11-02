@@ -3,7 +3,7 @@ import useInput from "../hooks/use-input";
 import styles from "./ResearchElectionForm.module.css";
 
 const isNotEmpty = (value) => value.trim() !== "";
-const isNotEmptyCheckBox = (value) => value;
+const isCheckBox = (value) => value;
 const isEmail = (value) => /^[^s@]+@[^s@]+.[^s@]+$/.test(value);
 const isAge = (value) => value.trim() !== "" && value <= 100;
 const isNotInstruction = (value) =>
@@ -83,12 +83,13 @@ const ResearchElectionForm = () => {
 
   const {
     value: partidosValue,
+    checkArr: checkPartidos,
     isValid: partidosIsValid,
     hasError: partidosHasError,
     valueChangeHandlerCheckBox: partidosChangeHandler,
     inputBlurHandler: partidosBlurHandler,
     reset: resetPartidos,
-  } = useInput(isNotEmptyCheckBox);
+  } = useInput(isCheckBox);
 
   const {
     value: obsValue,
@@ -108,7 +109,7 @@ const ResearchElectionForm = () => {
       ageValue,
       instructionValue,
       specValue,
-      partidosValue,
+      checkPartidos,
       obsValue,
     };
 
@@ -285,11 +286,7 @@ const ResearchElectionForm = () => {
             )}
           </div>
 
-          <div
-            className={styles["form-control"]}
-            value={partidosValue}
-            onBlur={partidosBlurHandler}
-          >
+          <div className={styles["form-control"]} onBlur={partidosBlurHandler}>
             <p htmlFor="partidoPolitico" className={styles["titles"]}>
               Com qual ou quais partidos políticos você se identifica:
             </p>
@@ -298,7 +295,7 @@ const ResearchElectionForm = () => {
                 type="checkbox"
                 id="psl"
                 name="part_check"
-                value="psl"
+                value={partidosPoliticos.PSL}
                 onChange={partidosChangeHandler}
               />
               <label htmlFor="psl">Partido Social Liberal (PSL)</label>
@@ -308,18 +305,17 @@ const ResearchElectionForm = () => {
                 type="checkbox"
                 id="pt"
                 name="part_check"
-                value="pt"
+                value={partidosPoliticos.PT}
                 onChange={partidosChangeHandler}
               />
               <label htmlFor="pt">Partido dos Trabalhadores (PT)</label>
             </div>
-
             <div className={styles["check-points"]}>
               <input
                 type="checkbox"
                 id="pl"
                 name="part_check"
-                value="pl"
+                value={partidosPoliticos.PL}
                 onChange={partidosChangeHandler}
               />
               <label htmlFor="pl">Partido Liberal (PL)</label>
@@ -329,7 +325,7 @@ const ResearchElectionForm = () => {
                 type="checkbox"
                 id="pp"
                 name="part_check"
-                value="pp"
+                value={partidosPoliticos.PP}
                 onChange={partidosChangeHandler}
               />
               <label htmlFor="pp">Progressista (PP)</label>
@@ -339,7 +335,7 @@ const ResearchElectionForm = () => {
                 type="checkbox"
                 id="psd"
                 name="part_check"
-                value="psd"
+                value={partidosPoliticos.PSD}
                 onChange={partidosChangeHandler}
               />
               <label htmlFor="psd">Partido Social Democrático (PSD)</label>
@@ -349,7 +345,7 @@ const ResearchElectionForm = () => {
                 type="checkbox"
                 id="mdb"
                 name="part_check"
-                value="mdb"
+                value={partidosPoliticos.MDB}
                 onChange={partidosChangeHandler}
               />
               <label htmlFor="mdb">
@@ -361,7 +357,7 @@ const ResearchElectionForm = () => {
                 type="checkbox"
                 id="psdb"
                 name="part_check"
-                value="psdb"
+                value={partidosPoliticos.PSDB}
                 onChange={partidosChangeHandler}
               />
               <label htmlFor="psdb">
@@ -373,7 +369,7 @@ const ResearchElectionForm = () => {
                 type="checkbox"
                 id="rep"
                 name="part_check"
-                value="rep"
+                value={partidosPoliticos.REP}
                 onChange={partidosChangeHandler}
               />
               <label htmlFor="rep">Republicanos</label>
@@ -383,7 +379,7 @@ const ResearchElectionForm = () => {
                 type="checkbox"
                 id="psb"
                 name="part_check"
-                value="psb"
+                value={partidosPoliticos.PSB}
                 onChange={partidosChangeHandler}
               />
               <label htmlFor="psb">Partido Socialista Brasileiro (PSB)</label>
@@ -393,7 +389,7 @@ const ResearchElectionForm = () => {
                 type="checkbox"
                 id="ppp"
                 name="part_check"
-                value="ppp"
+                value={partidosPoliticos.PPP}
                 onChange={partidosChangeHandler}
               />
               <label htmlFor="ppp">Bloco PROS, PSC, PTB</label>
@@ -403,7 +399,7 @@ const ResearchElectionForm = () => {
                 type="checkbox"
                 id="dem"
                 name="part_check"
-                value="dem"
+                value={partidosPoliticos.DEM}
                 onChange={partidosChangeHandler}
               />
               <label htmlFor="dem">Democratas (DEM)</label>
@@ -413,7 +409,7 @@ const ResearchElectionForm = () => {
                 type="checkbox"
                 id="pdt"
                 name="part_check"
-                value="pdt"
+                value={partidosPoliticos.PDT}
                 onChange={partidosChangeHandler}
               />
               <label htmlFor="pdt">Partido Democrático Trabalhista (PDT)</label>
@@ -423,7 +419,7 @@ const ResearchElectionForm = () => {
                 type="checkbox"
                 id="solidariedade"
                 name="part_check"
-                value="solidariedade"
+                value={partidosPoliticos.SOLIDARIEDADE}
                 onChange={partidosChangeHandler}
               />
               <label htmlFor="solidariedade">Solidariedade</label>
@@ -433,7 +429,7 @@ const ResearchElectionForm = () => {
                 type="checkbox"
                 id="podemos"
                 name="part_check"
-                value="podemos"
+                value={partidosPoliticos.PODE}
                 onChange={partidosChangeHandler}
               />
               <label htmlFor="podemos">Podemos (PODE)</label>
@@ -443,7 +439,7 @@ const ResearchElectionForm = () => {
                 type="checkbox"
                 id="psol"
                 name="part_check"
-                value="psol"
+                value={partidosPoliticos.PSOL}
                 onChange={partidosChangeHandler}
               />
               <label htmlFor="psol">
@@ -455,7 +451,7 @@ const ResearchElectionForm = () => {
                 type="checkbox"
                 id="novo"
                 name="part_check"
-                value="novo"
+                value={partidosPoliticos.NOVO}
                 onChange={partidosChangeHandler}
               />
               <label htmlFor="novo">Partido Novo (NOVO)</label>
@@ -465,7 +461,7 @@ const ResearchElectionForm = () => {
                 type="checkbox"
                 id="avante"
                 name="part_check"
-                value="avante"
+                value={partidosPoliticos.AVANTE}
                 onChange={partidosChangeHandler}
               />
               <label htmlFor="avante">Avante</label>
@@ -475,7 +471,7 @@ const ResearchElectionForm = () => {
                 type="checkbox"
                 id="pcdob"
                 name="part_check"
-                value="pcdob"
+                value={partidosPoliticos.PCDOB}
                 onChange={partidosChangeHandler}
               />
               <label htmlFor="pcdob">Partido Comunista do Brasil (PCdoB)</label>
@@ -485,7 +481,7 @@ const ResearchElectionForm = () => {
                 type="checkbox"
                 id="cidadania"
                 name="part_check"
-                value="cidadania"
+                value={partidosPoliticos.CIDADANIA}
                 onChange={partidosChangeHandler}
               />
               <label htmlFor="cidadania">Cidadania</label>
@@ -495,7 +491,7 @@ const ResearchElectionForm = () => {
                 type="checkbox"
                 id="patriota"
                 name="part_check"
-                value="patriota"
+                value={partidosPoliticos.PATRIOTA}
                 onChange={partidosChangeHandler}
               />
               <label htmlFor="patriota">Patriota</label>
@@ -505,7 +501,7 @@ const ResearchElectionForm = () => {
                 type="checkbox"
                 id="pv"
                 name="part_check"
-                value="pv"
+                value={partidosPoliticos.PV}
                 onChange={partidosChangeHandler}
               />
               <label htmlFor="pv">Partido Verde (PV)</label>
@@ -515,7 +511,7 @@ const ResearchElectionForm = () => {
                 type="checkbox"
                 id="rede"
                 name="part_check"
-                value="rede"
+                value={partidosPoliticos.REDE}
                 onChange={partidosChangeHandler}
               />
               <label htmlFor="pv">Rede Sustentabilidade (REDE)</label>
