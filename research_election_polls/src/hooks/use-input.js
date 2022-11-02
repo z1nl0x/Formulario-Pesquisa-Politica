@@ -19,7 +19,7 @@ const inputReducerFunc = (state, action) => {
     return {
       value: action.value,
       checkArr: state.checkArr.filter((e) => e !== action.value),
-      isTouched: state.isTouched,
+      isTouched: false,
     };
   }
 
@@ -40,7 +40,7 @@ const inputReducerFunc = (state, action) => {
   }
 
   if (action.type === "RESET") {
-    return { value: "", isTouched: false };
+    return { value: "", checkArr: [], isTouched: false };
   }
 };
 
@@ -52,6 +52,7 @@ const useInput = (validatedValue) => {
 
   const valueIsValid = validatedValue(inputState.value);
   const hasError = !valueIsValid && inputState.isTouched;
+  const checkHasError = inputState.checkArr.length < 1 && inputState.isTouched;
 
   const valueChangeHandler = (e) => {
     dispatch({ type: "INPUT", value: e.target.value });
@@ -59,8 +60,6 @@ const useInput = (validatedValue) => {
 
   const valueChangeHandlerCheckBox = (e) => {
     const { value, checked } = e.target;
-
-    console.log(`${value} is ${checked}`);
 
     if (checked) {
       dispatch({
@@ -85,6 +84,7 @@ const useInput = (validatedValue) => {
     checkArr: inputState.checkArr,
     isValid: valueIsValid,
     hasError: hasError,
+    checkHasError: checkHasError,
     valueChangeHandler,
     valueChangeHandlerCheckBox,
     inputBlurHandler,

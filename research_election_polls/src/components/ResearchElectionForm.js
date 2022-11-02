@@ -36,6 +36,9 @@ const partidosPoliticos = {
 };
 
 const ResearchElectionForm = () => {
+  const [keyRadio, setRadioKey] = useState(1);
+  const [keyCheck, setCheckKey] = useState(0);
+
   const {
     value: nameValue,
     isValid: nameIsValid,
@@ -84,9 +87,9 @@ const ResearchElectionForm = () => {
   const {
     value: partidosValue,
     checkArr: checkPartidos,
-    isValid: partidosIsValid,
-    hasError: partidosHasError,
     valueChangeHandlerCheckBox: partidosChangeHandler,
+    isValid: partidosArrIsValid,
+    checkHasError: partidosHasError,
     inputBlurHandler: partidosBlurHandler,
     reset: resetPartidos,
   } = useInput(isCheckBox);
@@ -114,8 +117,14 @@ const ResearchElectionForm = () => {
     };
 
     console.log(researchData);
-
+    setRadioKey((k) => k + 1);
+    setCheckKey((k) => k + 2 * 20);
     resetName();
+    resetEmail();
+    resetAge();
+    resetSpec();
+    resetPartidos();
+    resetObs();
   };
 
   return (
@@ -228,6 +237,7 @@ const ResearchElectionForm = () => {
             value={specValue}
             onChange={specChangeHandler}
             onBlur={specBlurHandler}
+            key={keyRadio}
           >
             <p htmlFor="espectroPolitico" className={styles["titles"]}>
               Com qual espectro político você se identifica mais, escolha apenas
@@ -286,7 +296,11 @@ const ResearchElectionForm = () => {
             )}
           </div>
 
-          <div className={styles["form-control"]} onBlur={partidosBlurHandler}>
+          <div
+            className={styles["form-control"]}
+            onBlur={partidosBlurHandler}
+            key={keyCheck}
+          >
             <p htmlFor="partidoPolitico" className={styles["titles"]}>
               Com qual ou quais partidos políticos você se identifica:
             </p>

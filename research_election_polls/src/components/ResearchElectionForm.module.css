@@ -130,6 +130,7 @@
 
 .radio-options {
   display: flex;
+  outline: none;
 }
 
 .radio-options label {
@@ -138,6 +139,7 @@
 
 .check-points {
   display: flex;
+  outline: none;
 }
 
 .check-points label {
@@ -170,7 +172,7 @@
   font-size: 15px;
   font-weight: bold;
   border: none;
-  width: 500px;
+  width: 690px;
   height: 50px;
   border-radius: 5px;
 }
