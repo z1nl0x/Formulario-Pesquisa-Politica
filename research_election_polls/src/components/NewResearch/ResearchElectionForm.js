@@ -1,10 +1,10 @@
 import { useState } from "react";
-import useInput from "../hooks/use-input";
+import useInput from "../../hooks/use-input";
 import styles from "./ResearchElectionForm.module.css";
 
 const isNotEmpty = (value) => value.trim() !== "";
 const isCheckBox = (value) => value;
-const isEmail = (value) => /^[^s@]+@[^s@]+.[^s@]+$/.test(value);
+const isEmail = (value) => /^\S+@\S+\.\S+$/.test(value);
 const isAge = (value) => value.trim() !== "" && value <= 100;
 const isNotInstruction = (value) =>
   value.trim() !== "" && value !== "Selecione uma opção";
@@ -35,7 +35,7 @@ const partidosPoliticos = {
   REDE: "rede",
 };
 
-const ResearchElectionForm = () => {
+const ResearchElectionForm = (props) => {
   const [keyRadio, setRadioKey] = useState(1);
   const [keyCheck, setCheckKey] = useState(0);
 
@@ -116,7 +116,8 @@ const ResearchElectionForm = () => {
       obsValue,
     };
 
-    console.log(researchData);
+    props.onEnterResearch(researchData);
+
     setRadioKey((k) => k + 1);
     setCheckKey((k) => k + 2 * 20);
     resetName();

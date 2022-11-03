@@ -1,11 +1,11 @@
 import styles from "./App.module.css";
-import ResearchElectionForm from "./components/ResearchElectionForm";
+import NewResearch from "./components/NewResearch/NewResearch";
 
 function App() {
   return (
     <div className={styles.App}>
       <p className={styles["page-title"]}>PESQUISA POLÍTICA</p>
-      <ResearchElectionForm />
+      <NewResearch />
     </div>
   );
 }
