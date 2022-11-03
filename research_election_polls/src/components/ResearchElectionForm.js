@@ -125,6 +125,7 @@ const ResearchElectionForm = () => {
     resetSpec();
     resetPartidos();
     resetObs();
+    resetInstruction();
   };
 
   return (
