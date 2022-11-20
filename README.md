@@ -1,4 +1,4 @@
-# Formulario de Pesquisa Politica
+# Aplicação Formulario de Pesquisa Política
 
 Uma simples aplicação com o intuito de coletar informações sobre a posição política da sociedade brasileira.
 Com apenas um formulário e algumas validações nos campos inseridos pelo usuário, o objetivo final era praticar alguns conceitos de ReactJS como Hooks customizados, e algumas lógicas de validação nos inputs.
