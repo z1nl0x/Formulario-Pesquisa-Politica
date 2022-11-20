@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useInput from "../../hooks/use-input";
 import styles from "./ResearchElectionForm.module.css";
 
 const isNotEmpty = (value) => value.trim() !== "";
-const isCheckBox = (value) => value;
+const isCheckBox = (value) => value.length > 1;
 const isEmail = (value) => /^\S+@\S+\.\S+$/.test(value);
 const isAge = (value) => value.trim() !== "" && value <= 100;
 const isNotInstruction = (value) =>
@@ -119,7 +119,7 @@ const ResearchElectionForm = (props) => {
     props.onEnterResearch(researchData);
 
     setRadioKey((k) => k + 1);
-    setCheckKey((k) => k + 2 * 20);
+    setCheckKey((k) => k + 2 * 17);
     resetName();
     resetEmail();
     resetAge();
@@ -129,6 +129,18 @@ const ResearchElectionForm = (props) => {
     resetInstruction();
   };
 
+  let formIsValid = false;
+
+  if (
+    nameIsValid &&
+    emailIsValid &&
+    ageIsValid &&
+    instructionIsValid &&
+    specIsValid &&
+    partidosArrIsValid
+  ) {
+    formIsValid = true;
+  }
   return (
     <>
       <form onSubmit={onSubmitHandler} className={styles["form-research"]}>
@@ -562,7 +574,7 @@ const ResearchElectionForm = (props) => {
           </div>
         </div>
         <div className={styles["group-control-btn"]}>
-          <button>Enviar</button>
+          <button disabled={!formIsValid}>Enviar</button>
         </div>
       </form>
     </>

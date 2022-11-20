@@ -5,7 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: url("../public/assets/bg-app.jpg");
+  /* background: url("../public/assets/bg-app.jpg"); */
+  background-color: #4e7b87;
   background-repeat: no-repeat;
   background-size: auto;
   background-position: center;

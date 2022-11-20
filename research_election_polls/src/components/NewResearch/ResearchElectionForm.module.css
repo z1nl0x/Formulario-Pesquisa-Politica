@@ -167,12 +167,12 @@
 
 .group-control-btn button,
 .group-control-btn button:active {
-  background-color: blue;
+  background-color: #798140;
   color: white;
   font-size: 15px;
   font-weight: bold;
   border: none;
-  width: 40vw;
+  width: 21vw;
   height: 47px;
   border-radius: 5px;
 }
@@ -180,6 +180,15 @@
 .group-control-btn button:hover {
   background-color: white;
   color: black;
+}
+
+.group-control-btn button:disabled,
+.group-control-btn button:disabled:hover,
+.group-control-btn button:disabled:active {
+  background-color: #ccc;
+  color: #292929;
+  border-color: #ccc;
+  cursor: not-allowed;
 }
 
 .error-text {
