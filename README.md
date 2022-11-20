@@ -13,6 +13,10 @@ Com apenas um formulário e algumas validações nos campos inseridos pelo usuá
 
 - No mesmo diretório "research_election_polls" abra o terminal/prompt de comandos e digite: npm install (Para instalar as dependências do projeto).
 
+- No mesmo diretório "research_election_polls" crie um arquivo .env com a seguinte informação:
+  REACT_APP_URL=https://pesquisa-politica-app-default-rtdb.firebaseio.com/researches.json
+  Onde esse link será o endereço do seu DB Firebase que foi a tecnologia utilizada para armazenar os dados coletados.
+
 #### Inicializando a Aplicação Research Election Polls
 
 - No mesmo diretório "research_election_polls" abra o terminal/prompt de comandos e digite: npm start (Para inicializar a aplicação).
